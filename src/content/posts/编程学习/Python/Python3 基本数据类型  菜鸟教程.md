@@ -211,7 +211,7 @@ Python 使用反斜杠 \\ 转义特殊字符，如果你不想让反斜杠发生
 
 ## 实例
 
-```
+``` python
 >>> print('Ru\noob')
 Ru
 oob

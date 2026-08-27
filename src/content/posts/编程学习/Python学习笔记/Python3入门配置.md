@@ -189,7 +189,7 @@ Mac OS 中若需在非默认目录引用 Python，需手动将 Python 安装目�
 
 bash shell（Linux）：
 
-```
+``` bash
 export PATH="$PATH:/usr/local/bin/python"
 ```
 
