@@ -82,7 +82,7 @@ const incomeTotalAmt = incomeList.reduce((s, r) => s + r.amount, 0);
     </div>
     <div class="today-card">
       <div class="today-head">
-        <h3 class="today-title">今日支出</h3>
+        <h3 class="today-title">今日流水</h3>
         <span class="today-date">{todayStats.label}</span>
       </div>
       <div class="today-body">
@@ -103,12 +103,15 @@ const incomeTotalAmt = incomeList.reduce((s, r) => s + r.amount, 0);
         <ul class="today-list">
           {todayEntries.map((e) => (
             <li class="today-row">
-              <span class="today-row-cat">{e.data.category}</span>
               <span class="today-row-desc">{e.data.description || e.data.title || e.data.category}</span>
-              <b class="today-row-amt" data-type={e.data.type}>
-                {e.data.type === "income" || e.data.type === "liability" ? "+" : e.data.type === "expense" ? "-" : ""}
-                {fmt(Math.abs(e.data.amount))}
-              </b>
+              <span class="today-row-meta">
+                <span class="today-row-cat">{e.data.category}</span>
+                <span class="today-row-slash">/</span>
+                <b class="today-row-amt" data-type={e.data.type}>
+                  {e.data.type === "income" || e.data.type === "liability" ? "+" : e.data.type === "expense" ? "-" : ""}
+                  {fmt(Math.abs(e.data.amount))}
+                </b>
+              </span>
             </li>
           ))}
         </ul>
@@ -150,19 +153,20 @@ const incomeTotalAmt = incomeList.reduce((s, r) => s + r.amount, 0);
 @media(max-width:480px){
   .today-item-value{ font-size:0.92rem; }
 }
-/* 今日支出：当天明细列表 */
+/* 今日流水：当天明细列表 */
 .today-list{ list-style:none; margin:0.55rem 0 0; padding:0; display:flex; flex-direction:column; }
-.today-row{ display:grid; grid-template-columns:auto 1fr auto; gap:0.55rem; align-items:center; padding:0.42rem 0.15rem; border-top:1px solid oklch(0 0 0 / 0.05); font-size:0.75rem; }
+.today-row{ display:flex; justify-content:space-between; align-items:baseline; gap:0.75rem; padding:0.42rem 0.15rem; border-top:1px solid oklch(0 0 0 / 0.05); font-size:0.75rem; }
 :root.dark .today-row{ border-color: oklch(1 0 0 / 0.06); }
 .today-row:first-child{ border-top:none; }
-.today-row-cat{ font-size:0.64rem; padding:0.1rem 0.42rem; border-radius:9999px; background: oklch(0 0 0 / 0.04); color:var(--guestbook-muted); white-space:nowrap; }
-:root.dark .today-row-cat{ background: oklch(1 0 0 / 0.07); }
-.today-row-desc{ color:var(--deep-text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.today-row-desc{ color:var(--deep-text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }
 :root.dark .today-row-desc{ color: oklch(0.88 0 0); }
+.today-row-meta{ display:inline-flex; align-items:baseline; gap:0.28rem; flex-shrink:0; white-space:nowrap; }
+.today-row-cat{ font-size:0.66rem; color:var(--guestbook-muted); }
+.today-row-slash{ color:var(--guestbook-muted); opacity:0.55; }
 .today-row-amt{ font-weight:700; white-space:nowrap; }
 .today-row-amt[data-type="expense"]{ color:#0e7490; }
-.today-row-amt[data-type="income"]{ color:#ef4444; }
-.today-row-amt[data-type="liability"],
+.today-row-amt[data-type="income"],
+.today-row-amt[data-type="liability"]{ color:#ef4444; }
 .today-row-amt[data-type="transfer"]{ color:var(--guestbook-muted); font-weight:600; }
 .today-empty{ margin:0.55rem 0 0; padding:0.5rem 0; text-align:center; font-size:0.74rem; color:var(--guestbook-muted); }
 .bills-footer{ display:flex; justify-content:center; padding-top:0.6rem; }
