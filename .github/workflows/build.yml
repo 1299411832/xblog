@@ -63,3 +63,5 @@ jobs:
       # 与 EdgeOne 构建完全一致（含图标生成 + pagefind）
       - name: Run Astro Build
         run: pnpm build
+        env:
+          GATE_PASSWORD: ${{ secrets.GATE_PASSWORD }}
