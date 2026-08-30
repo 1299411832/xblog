@@ -86,7 +86,7 @@ const commands = [
 		name: "desc",
 		desc: "AI 批量生成文章摘要（调用千问 API）",
 		usage: "pnpm cli desc",
-		run: () => spawn("pnpm", ["exec", "tsx", resolve(__dirname, "生成摘要", "index.ts")], { stdio: "inherit", shell: true }),
+		run: () => spawn("pnpm", ["exec", "tsx", "--env-file=.env", resolve(__dirname, "生成摘要", "index.ts")], { stdio: "inherit", shell: true }),
 	},
 	{
 		name: "nav",

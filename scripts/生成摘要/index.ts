@@ -2,7 +2,7 @@
  * AI 摘要补全脚本 — 调用千问（Qwen）API 为缺失 description 的文章批量生成摘要
  *
  * 用法：
- *   npx tsx scripts/fill-descriptions/index.ts
+ *   pnpm cli desc（内部等价于 npx tsx --env-file=.env scripts/生成摘要/index.ts）
  *
  * 只补全新文章（没有 description 的），已有 description 的跳过，不覆盖。
  */
@@ -12,11 +12,19 @@ import * as path from "node:path";
 import matter from "gray-matter";
 
 // ============================================================
-// 配置：千问 API（密钥直写，不上传 GitHub。脚本自身会被 .gitignore 保护）
+// 配置：千问 API（密钥从环境变量 DASHSCOPE_API_KEY 读取，写在 .env（已 gitignore）。
+// 2026-08-30 GitGuardian 事故：密钥曾硬编码于此并被推送公开，已轮换——切勿再把密钥写进任何被跟踪的文件）
 // ============================================================
-const QWEN_API_KEY = "sk-8955314433cd4041a338f677bcaf4b60";
+const QWEN_API_KEY = process.env.DASHSCOPE_API_KEY ?? "";
 const QWEN_BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1";
 const QWEN_MODEL = "qwen-plus";
+
+if (!QWEN_API_KEY) {
+  console.error(
+    "❌  缺少 DASHSCOPE_API_KEY 环境变量：请在项目根目录 .env 中配置后再运行本脚本",
+  );
+  process.exit(1);
+}
 
 // 每篇文章最大字符数（传输给 AI 作为上下文）
 const MAX_CONTEXT_CHARS = 2600;
