@@ -107,7 +107,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		});
 	}
 
-	// 我的 - 日历、资金、应用展示、音乐
+	// 我的 - 日历、账单、应用展示、音乐
 	links.push({
 		name: "我的",
 		url: "/schedules/",
@@ -119,7 +119,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 				icon: "material-symbols:calendar-today-outline",
 			},
 			{
-				name: "资金",
+				name: "账单",
 				url: "/bills/",
 				icon: "material-symbols:account-balance-wallet-outline",
 			},

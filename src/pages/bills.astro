@@ -35,6 +35,9 @@ const incomeList = categoryIncomeList(sorted, year, month, 100);
 const monthIncome = period.month.income;
 const monthExpense = period.month.expense;
 const monthBalance = monthIncome - monthExpense;
+// 今日支出区块数据
+const todayStats = period.today;
+const fmt = (n: number) => n.toFixed(2);
 // 支出排行总数
 const expenseTotal = expenseRank.reduce((s, r) => s + r.amount, 0);
 const expenseCount = expenseRank.reduce((s, r) => s + r.count, 0);
@@ -57,6 +60,26 @@ const incomeTotalAmt = incomeList.reduce((s, r) => s + r.amount, 0);
         <div class="order-expense"><ExpenseRankCard data={expenseRank} totalCount={expenseCount} totalExpense={expenseTotal} /></div>
       </div>
     </div>
+    <div class="today-card">
+      <div class="today-head">
+        <h3 class="today-title">今日支出</h3>
+        <span class="today-date">{todayStats.label}</span>
+      </div>
+      <div class="today-body">
+        <div class="today-item">
+          <span class="today-item-label">支出</span>
+          <b class="today-item-value today-expense">¥{fmt(todayStats.expense)}</b>
+        </div>
+        <div class="today-item">
+          <span class="today-item-label">收入</span>
+          <b class="today-item-value today-income">¥{fmt(todayStats.income)}</b>
+        </div>
+        <div class="today-item">
+          <span class="today-item-label">记账笔数</span>
+          <b class="today-item-value today-count">{todayStats.count}</b>
+        </div>
+      </div>
+    </div>
     <div class="bills-footer">
       <button class="bills-custom-btn" type="button">+ 自定义首页</button>
     </div>
@@ -71,6 +94,26 @@ const incomeTotalAmt = incomeList.reduce((s, r) => s + r.amount, 0);
 .bills-grid{ display:grid; grid-template-columns:1fr 1fr; gap:0.9rem; align-items:start; }
 /* 整体等比缩小：各卡片已按 0.9 比例缩减（padding/字号），此处再做容器级微缩 */
 .bills-col{ display:flex; flex-direction:column; gap:0.9rem; }
+/* 今日支出区块 */
+.today-card{ background:#fff; border:1px solid oklch(0 0 0 / 0.06); border-radius:0.75rem; padding:0.8rem 0.95rem; }
+:root.dark .today-card{ background: oklch(0.16 0 0 / 0.86); border-color: oklch(1 0 0 / 0.08); }
+.today-head{ display:flex; align-items:baseline; justify-content:space-between; gap:0.6rem; margin-bottom:0.55rem; }
+.today-title{ font-size:0.82rem; font-weight:700; margin:0; }
+:root.dark .today-title{ color: oklch(0.90 0 0); }
+.today-date{ font-size:0.62rem; color:var(--guestbook-muted); white-space:nowrap; }
+.today-body{ display:grid; grid-template-columns:repeat(3, 1fr); gap:0.5rem; }
+.today-item{ display:flex; flex-direction:column; align-items:center; gap:0.15rem; padding:0.5rem 0.4rem; border-radius:0.5rem; background: oklch(0 0 0 / 0.03); }
+:root.dark .today-item{ background: oklch(1 0 0 / 0.05); }
+.today-item-label{ font-size:0.66rem; color:var(--guestbook-muted); }
+.today-item-value{ font-size:1.05rem; font-weight:800; letter-spacing:-0.01em; line-height:1.1; }
+.today-expense{ color:#0e7490; }
+.today-income{ color:#ef4444; }
+.today-count{ color:var(--deep-text); }
+:root.dark .today-expense{ color: oklch(0.72 0.1 210); }
+:root.dark .today-income{ color: oklch(0.72 0.15 25); }
+@media(max-width:480px){
+  .today-item-value{ font-size:0.92rem; }
+}
 .bills-footer{ display:flex; justify-content:center; padding-top:0.6rem; }
 .bills-custom-btn{ padding:0.45rem 0.9rem; border:1px solid oklch(0 0 0 / 0.12); border-radius:0.5rem; background:#fff; font-size:0.72rem; color:var(--guestbook-muted); cursor:pointer; }
 :root.dark .bills-custom-btn{ background: oklch(0.16 0 0 / 0.86); border-color: oklch(1 0 0 / 0.12); color:var(--guestbook-muted); }
