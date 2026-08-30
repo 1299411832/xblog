@@ -65,7 +65,7 @@ src/
 ├── constants/           # 常量：页面尺寸、主题模式、图标、链接预设
 ├── content/             # Astro Content Collections（15 个集合：posts/spec/moments/bangumi/life/notebooks/album/daohang/ziyuan/friends/apps/tombstones/changelog/bills/schedules）
 │   ├── album/ apps/ bangumi/ changelog/ daohang/
-│   ├── friends/ life/ moments/ posts/ spec/ ziyuan/  # spec/about.mdx 为组件化 Q&A（含 ChangelogGraph）
+│   ├── friends/ life/ moments/ posts/ spec/ ziyuan/  # spec/about.mdx 为组件化 Q&A；更新日志图谱组件（ChangelogGraph）用于 /changelog/ 页（2026-08-30 起不再嵌入关于页）
 │   └── life/notebooks/  # notebooks 集合物理位置（life 的子目录，2026-09-27 起归档改 card 流，支持 images 多图 12字展开 + 年份下拉联动热力图与列表）
 ├── i18n/                # 国际化（5 种语言，296 个翻译键）
 │   └── languages/       # en.ts, zh_CN.ts, zh_TW.ts, ja.ts, ru.ts
