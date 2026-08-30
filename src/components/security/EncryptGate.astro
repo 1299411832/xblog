@@ -1,0 +1,118 @@
+---
+/**
+ * 构建时加密壳（EncryptGate）
+ *
+ * 把 slot 渲染出的敏感 HTML 用 PBKDF2 + AES-256-GCM 加密成密文内联进页面，
+ * 服务端不输出任何明文（view-source / 抓包只有密文）；
+ * 客户端由 PasswordGate.svelte 解密后注入 DOM。
+ *
+ * - 密码取构建环境变量 GATE_PASSWORD（非 PUBLIC_ 前缀，不会进入客户端 bundle）
+ * - securityConfig.enabled 为 true 但未配置 GATE_PASSWORD 时构建直接失败，
+ *   避免"以为加密了其实没有"的事故；需要明文构建时显式把 enabled 改为 false
+ * - salt 按全局常量确定性派生（统一密码模式下所有加密页共享同一密钥）：
+ *   任意加密页输一次密码后，其余加密页与重开浏览器后的持久记忆直接复用派生密钥免输；
+ *   salt 本就随页面公开，防彩虹表只需 per-site 不同，随机性由密码强度 + PBKDF2 迭代保障
+ */
+import { webcrypto as nodeCrypto } from "node:crypto";
+import { securityConfig } from "@/config";
+
+interface Props {
+	gateId: string;
+}
+
+const { gateId } = Astro.props;
+const password = import.meta.env.GATE_PASSWORD as string | undefined;
+const enabled = securityConfig.enabled && Boolean(password);
+
+if (securityConfig.enabled && !password) {
+	throw new Error(
+		"[EncryptGate] securityConfig.enabled 已开启，但未配置 GATE_PASSWORD 环境变量。请在本地 .env 或 CI Secrets 中设置，或显式将 securityConfig.enabled 改为 false。",
+	);
+}
+
+function toB64(bytes: Uint8Array): string {
+	let binary = "";
+	for (const b of bytes) binary += String.fromCharCode(b);
+	return btoa(binary);
+}
+
+const GATE_SALT_SEED = "firefly-encrypt-gate:v1:shared";
+
+async function gateSalt(): Promise<Uint8Array<ArrayBuffer>> {
+	const digest = await nodeCrypto.subtle.digest(
+		"SHA-256",
+		new TextEncoder().encode(GATE_SALT_SEED),
+	);
+	return new Uint8Array(digest.slice(0, 16));
+}
+
+async function encryptHtml(html: string): Promise<string> {
+	const iterations = securityConfig.pbkdf2Iterations;
+	const salt = await gateSalt();
+	const iv = nodeCrypto.getRandomValues(new Uint8Array(new ArrayBuffer(12)));
+	const baseKey = await nodeCrypto.subtle.importKey(
+		"raw",
+		new TextEncoder().encode(password as string),
+		"PBKDF2",
+		false,
+		["deriveKey"],
+	);
+	const key = await nodeCrypto.subtle.deriveKey(
+		{ name: "PBKDF2", salt, iterations, hash: "SHA-256" },
+		baseKey,
+		{ name: "AES-GCM", length: 256 },
+		false,
+		["encrypt"],
+	);
+	const ciphertext = await nodeCrypto.subtle.encrypt(
+		{ name: "AES-GCM", iv },
+		key,
+		new TextEncoder().encode(html),
+	);
+	return JSON.stringify({
+		v: 1,
+		salt: toB64(salt),
+		iv: toB64(iv),
+		ct: toB64(new Uint8Array(ciphertext)),
+		iterations,
+	});
+}
+
+const rawHtml = enabled ? await Astro.slots.render("default") : "";
+
+// Astro 会把页面第一个 client 组件的 astro-island runtime 内联脚本注入在 slot HTML 内。
+// 它必须留在明文区（script 经 innerHTML 注入不会执行），否则整页 island（含
+// PasswordGate 自身）都不会水合。提取特征：runtime 定义 astro-island 自定义元素、
+// astro:load 小脚本与之相邻输出。
+const runtimeScripts: string[] = [];
+const payloadHtml = rawHtml.replace(
+	/<script>([\s\S]*?)<\/script>/g,
+	(full: string, body: string) => {
+		if (
+			body.includes('customElements.define("astro-island"') ||
+			body.includes('dispatchEvent(new Event("astro:load"))')
+		) {
+			runtimeScripts.push(full);
+			return "";
+		}
+		return full;
+	},
+);
+
+const payload = enabled ? await encryptHtml(payloadHtml) : "";
+---
+
+{
+	enabled ? (
+		<Fragment>
+			{runtimeScripts.map((script) => (
+				<Fragment set:html={script} />
+			))}
+			<div class="encrypt-payload" data-gate-id={gateId}>
+				<template data-gate-template set:html={payload} />
+			</div>
+		</Fragment>
+	) : (
+		<slot />
+	)
+}

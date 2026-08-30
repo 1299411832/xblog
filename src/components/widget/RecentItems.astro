@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { Icon } from "astro-icon/components";
 import WidgetLayout from "@/components/common/WidgetLayout.astro";
+import { securityConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import { processCoverImageSync } from "@/utils/image-utils";
@@ -91,28 +92,31 @@ const allItems = [
 				id: b.id,
 			};
 		}),
-	...notebooksEntries
-		.filter((n) => !n.id.includes("_index"))
-		.sort(
-			(a, b) =>
-				(b.data.date ? new Date(b.data.date).getTime() : 0) -
-				(a.data.date ? new Date(a.data.date).getTime() : 0),
-		)
-		.slice(0, 2)
-		.map((n) => {
-			const folder = n.id.replace(/\\/g, "/").split("/")[0];
-			const slug = (n.id.split("/").pop() || "").replace(/\.md$/, "");
-			return {
-				type: "life-notebook",
-				title: `${notebookNames[folder] || folder} · ${n.data.name || "未命名"}`,
-				date: n.data.date || new Date(),
-				url: `/life/notebooks/${folder}/#note-${slug}`,
-				image:
-					n.data.cover ||
-					"https://img.tsh520.cn/file/blog/album/武侠风/22.webp",
-				id: n.id,
-			};
-		}),
+	// 页面加密启用时跳过：防止笔记本标题/日期经侧栏"最近更新"泄露
+	...(securityConfig.enabled
+		? []
+		: notebooksEntries
+				.filter((n) => !n.id.includes("_index"))
+				.sort(
+					(a, b) =>
+						(b.data.date ? new Date(b.data.date).getTime() : 0) -
+						(a.data.date ? new Date(a.data.date).getTime() : 0),
+				)
+				.slice(0, 2)
+				.map((n) => {
+					const folder = n.id.replace(/\\/g, "/").split("/")[0];
+					const slug = (n.id.split("/").pop() || "").replace(/\.md$/, "");
+					return {
+						type: "life-notebook",
+						title: `${notebookNames[folder] || folder} · ${n.data.name || "未命名"}`,
+						date: n.data.date || new Date(),
+						url: `/life/notebooks/${folder}/#note-${slug}`,
+						image:
+							n.data.cover ||
+							"https://img.tsh520.cn/file/blog/album/武侠风/22.webp",
+						id: n.id,
+					};
+				})),
 ];
 
 const recentItems = allItems

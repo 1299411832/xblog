@@ -7,6 +7,7 @@ import {
 	getCategoryFromId,
 } from "@utils/category-tree";
 import { getCategoryUrl, getTagUrl } from "@utils/url-utils";
+import { securityConfig } from "@/config";
 
 // // Retrieve posts and sort them by publication date
 async function getRawSortedPosts() {
@@ -168,20 +169,23 @@ export async function getArchiveList(): Promise<ArchiveItem[]> {
 		});
 
 	// 笔记本记录（排除 _index 元数据条目）
-	notebooksEntries
-		.filter((n) => !n.id.includes("_index"))
-		.forEach((n) => {
-			lifeItems.push({
-				id: n.id,
-				type: "life",
-				data: {
-					title: n.data.name || "笔记本",
-					published: n.data.date || new Date(),
-					tags: ["笔记本"],
-					link: "/life/notebooks/",
-				},
+	// 页面加密启用时跳过：防止笔记本标题/日期经归档时间线泄露
+	if (!securityConfig.enabled) {
+		notebooksEntries
+			.filter((n) => !n.id.includes("_index"))
+			.forEach((n) => {
+				lifeItems.push({
+					id: n.id,
+					type: "life",
+					data: {
+						title: n.data.name || "笔记本",
+						published: n.data.date || new Date(),
+						tags: ["笔记本"],
+						link: "/life/notebooks/",
+					},
+				});
 			});
-		});
+	}
 
 	return [...postItems, ...momentItems, ...bangumiItems, ...lifeItems].sort(
 		(a, b) => {

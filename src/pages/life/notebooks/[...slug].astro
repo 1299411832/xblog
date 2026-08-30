@@ -3,6 +3,8 @@ import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import { Icon } from "astro-icon/components";
 import NotebookCommentModal from "@/components/comment/NotebookCommentModal.svelte";
+import EncryptGate from "@/components/security/EncryptGate.astro";
+import PasswordGate from "@/components/security/PasswordGate.svelte";
 import ArchiveHeatmap from "@/components/widget/ArchiveHeatmap.astro";
 import { profileConfig } from "@/config";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
@@ -179,7 +181,8 @@ const noteCards = (sortedEntries || []).map((e) => {
 });
 ---
 
-<MainGridLayout title={entry.data.name || "笔记本"} description={entry.data.summary || "笔记本记录"}>
+<MainGridLayout title="笔记本" description="加密的笔记本内容">
+	<EncryptGate gateId="notebooks">
 	<nav class="cb" id="nb-breadcrumb" aria-label="Breadcrumb" style="margin-bottom: 0.5rem;">
 		<ol class="cb__list">
 			<li class="cb__item">
@@ -307,6 +310,7 @@ const noteCards = (sortedEntries || []).map((e) => {
 			)}
 		</div>
 	</div>
+	</EncryptGate>
 
 	<script is:inline>
 	(function() {
@@ -485,9 +489,10 @@ const noteCards = (sortedEntries || []).map((e) => {
 		});
 	})();
 	</script>
-</MainGridLayout>
+	<PasswordGate client:load gateId="notebooks" />
+	</MainGridLayout>
 
-<style>
+	<style>
 	.nb-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem; background: var(--card-bg); border: 1.5px dashed var(--line-divider); border-radius: 1rem; text-align: center; }
 	.nb-empty-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
 	.nb-empty p { font-size: 0.875rem; color: var(--content-meta); margin: 0; }

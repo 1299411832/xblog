@@ -50,6 +50,7 @@ jobs:
           PUBLIC_IMAGEBED_AUTH_CODE: ${{ secrets.PUBLIC_IMAGEBED_AUTH_CODE }}
           PUBLIC_IMAGEBED_FOLDER: ${{ secrets.PUBLIC_IMAGEBED_FOLDER }}
           PUBLIC_IMAGEBED_API_TOKEN: ${{ secrets.PUBLIC_IMAGEBED_API_TOKEN }}
+          GATE_PASSWORD: ${{ secrets.GATE_PASSWORD }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

@@ -63,3 +63,6 @@ src/notes
 
 # 本地维护的插件目录（AstrBot BlogWriter 等，独立 git 仓库，不随博客仓库提交）
 /plug-in/
+
+# 本地 AI 工具目录备份（从 src 移出，避免被构建器解析）
+.local-skill-backup/

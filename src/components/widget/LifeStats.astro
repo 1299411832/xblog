@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { Icon } from "astro-icon/components";
 import WidgetLayout from "@/components/common/WidgetLayout.astro";
+import { securityConfig } from "@/config";
 
 interface Props {
 	class?: string;
@@ -36,7 +37,7 @@ const notebookFolders = new Set(
 );
 const notebooksCount = notebookFolders.size;
 
-// 构建统计数据
+// 构建统计数据（页面加密启用时不显示笔记本数量，防止泄露规模）
 const stats: { icon: string; label: string; value: number; suffix?: string }[] =
 	[
 		{
@@ -44,11 +45,15 @@ const stats: { icon: string; label: string; value: number; suffix?: string }[] =
 			label: "去过城市",
 			value: visitedCities,
 		},
-		{
-			icon: "material-symbols:book-outline",
-			label: "笔记本数",
-			value: notebooksCount,
-		},
+		...(securityConfig.enabled
+			? []
+			: [
+					{
+						icon: "material-symbols:book-outline",
+						label: "笔记本数",
+						value: notebooksCount,
+					},
+				]),
 		{
 			icon: "material-symbols:location-on-outline",
 			label: "足迹记录",

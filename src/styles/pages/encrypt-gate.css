@@ -1,0 +1,254 @@
+/* ============================================
+ * 页面加密毛玻璃门（EncryptGate / PasswordGate）
+ * 结构：fixed 全屏遮罩（backdrop blur）→ 骨架剪影（装饰，自身模糊）
+ *       → 中央锁卡（标题/密码框/解锁按钮/错误提示）
+ * 遮罩层级 --z-encrypt-overlay 见 tokens/z-index.css
+ * ============================================ */
+
+.encrypt-gate {
+	position: fixed;
+	inset: 0;
+	z-index: var(--z-encrypt-overlay);
+	display: grid;
+	place-items: center;
+	padding: 1.25rem;
+	background: color-mix(in oklch, var(--page-bg) 62%, transparent);
+	backdrop-filter: blur(24px) saturate(1.15);
+	-webkit-backdrop-filter: blur(24px) saturate(1.15);
+	transition:
+		opacity 0.55s ease,
+		backdrop-filter 0.55s ease,
+		-webkit-backdrop-filter 0.55s ease;
+}
+
+/* 解锁瞬间：毛玻璃散焦 → 清晰 + 整体淡出（PasswordGate 加 is-unlocking 触发） */
+.encrypt-gate.is-unlocking {
+	opacity: 0;
+	backdrop-filter: blur(0px) saturate(1);
+	-webkit-backdrop-filter: blur(0px) saturate(1);
+}
+
+/* ===== 骨架剪影：模拟"内容被糊住"的视觉，纯装饰不含任何真实内容 ===== */
+.encrypt-gate__skeletons {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 22rem));
+	gap: 1.25rem;
+	align-content: center;
+	justify-content: center;
+	padding: 1.5rem;
+	pointer-events: none;
+}
+
+.encrypt-gate__skeleton {
+	height: 8.5rem;
+	border-radius: 0.875rem;
+	background: color-mix(in oklch, var(--card-bg) 55%, transparent);
+	border: 1px solid color-mix(in oklch, var(--line-divider) 60%, transparent);
+	filter: blur(14px);
+	transform: translateZ(0);
+}
+
+.encrypt-gate__skeleton:nth-child(2n) {
+	height: 6rem;
+	justify-self: end;
+	width: 78%;
+}
+
+.encrypt-gate__skeleton:nth-child(3) {
+	width: 84%;
+}
+
+@media (max-width: 640px) {
+	.encrypt-gate__skeletons {
+		grid-template-columns: 1fr;
+		gap: 0.9rem;
+	}
+
+	.encrypt-gate__skeleton:nth-child(2n) {
+		justify-self: start;
+		width: 88%;
+	}
+}
+
+/* ===== 中央锁卡 ===== */
+.encrypt-gate__card {
+	position: relative;
+	z-index: 1;
+	width: min(100%, 22rem);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.55rem;
+	padding: 1.75rem 1.5rem 1.5rem;
+	border-radius: 1rem;
+	border: 1px solid oklch(1 0 0 / 0.55);
+	background: oklch(1 0 0 / 0.78);
+	backdrop-filter: blur(18px) saturate(1.4);
+	-webkit-backdrop-filter: blur(18px) saturate(1.4);
+	box-shadow:
+		0 12px 40px oklch(0 0 0 / 0.14),
+		0 1px 0 oklch(1 0 0 / 0.65) inset;
+	text-align: center;
+}
+
+:root.dark .encrypt-gate__card {
+	background: oklch(0.18 0 0 / 0.78);
+	border-color: oklch(1 0 0 / 0.12);
+	box-shadow:
+		0 16px 48px oklch(0 0 0 / 0.45),
+		0 1px 0 oklch(1 0 0 / 0.08) inset;
+}
+
+.encrypt-gate__lock {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 3.1rem;
+	height: 3.1rem;
+	margin-bottom: 0.25rem;
+	border-radius: 9999px;
+	color: var(--btn-content);
+	background: linear-gradient(
+		135deg,
+		var(--primary),
+		oklch(from var(--primary) calc(l + 0.08) c h)
+	);
+	box-shadow: 0 6px 18px color-mix(in oklch, var(--primary) 35%, transparent);
+}
+
+.encrypt-gate__title {
+	margin: 0;
+	font-size: 1.15rem;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+	color: var(--deep-text);
+}
+
+.encrypt-gate__hint {
+	margin: 0 0 0.35rem;
+	font-size: 0.78rem;
+	line-height: 1.6;
+	color: var(--content-meta);
+}
+
+.encrypt-gate__form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.55rem;
+	width: 100%;
+}
+
+.encrypt-gate__input {
+	width: 100%;
+	padding: 0.6rem 0.8rem;
+	border-radius: 0.6rem;
+	border: 1px solid var(--line-divider);
+	background: var(--page-bg);
+	color: var(--deep-text);
+	font-size: 0.88rem;
+	text-align: center;
+	letter-spacing: 0.08em;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.encrypt-gate__input:focus {
+	outline: none;
+	border-color: var(--primary);
+	box-shadow: 0 0 0 3px color-mix(in oklch, var(--primary) 22%, transparent);
+}
+
+.encrypt-gate__input.is-error {
+	border-color: #ef4444;
+	animation: encrypt-gate-shake 0.4s ease;
+}
+
+.encrypt-gate__input:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+
+.encrypt-gate__error {
+	margin: 0;
+	min-height: 1.1em;
+	font-size: 0.74rem;
+	color: #ef4444;
+}
+
+.encrypt-gate__submit {
+	width: 100%;
+	padding: 0.6rem 0.9rem;
+	border: none;
+	border-radius: 0.6rem;
+	background: var(--btn-regular-bg);
+	color: var(--btn-content);
+	font-size: 0.88rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.encrypt-gate__submit:hover:not(:disabled) {
+	opacity: 0.88;
+}
+
+.encrypt-gate__submit:active:not(:disabled) {
+	transform: scale(0.98);
+}
+
+.encrypt-gate__submit:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.encrypt-gate__remember {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	margin-top: 0.1rem;
+	font-size: 0.74rem;
+	color: var(--content-meta);
+	cursor: pointer;
+	user-select: none;
+}
+
+.encrypt-gate__remember input {
+	accent-color: var(--primary);
+}
+
+.encrypt-gate__noscript {
+	margin: 0;
+	font-size: 0.74rem;
+	color: #ef4444;
+}
+
+@keyframes encrypt-gate-shake {
+	0%,
+	100% {
+		transform: translateX(0);
+	}
+	20% {
+		transform: translateX(-7px);
+	}
+	40% {
+		transform: translateX(6px);
+	}
+	60% {
+		transform: translateX(-4px);
+	}
+	80% {
+		transform: translateX(3px);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.encrypt-gate,
+	.encrypt-gate.is-unlocking {
+		transition: none;
+	}
+
+	.encrypt-gate__skeleton {
+		filter: blur(10px);
+	}
+}

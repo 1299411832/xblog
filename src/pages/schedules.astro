@@ -2,6 +2,8 @@
 import { getCollection } from "astro:content";
 import { Lunar } from "lunar-javascript";
 import SchedulesView from "@/components/schedules/SchedulesView.svelte";
+import EncryptGate from "@/components/security/EncryptGate.astro";
+import PasswordGate from "@/components/security/PasswordGate.svelte";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
 const raw = await getCollection("schedules");
@@ -53,6 +55,11 @@ const selected =
 	`${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 ---
 <MainGridLayout title="日程" description="日历与日程">
+  <!-- PasswordGate 必须在 EncryptGate 之前：Astro 的 astro-island runtime 内联脚本
+       跟随第一个 island 输出，若第一个 island（SchedulesView）被加密，
+       runtime 会一起进密文导致全页 island 无法水合 -->
+  <PasswordGate client:load gateId="schedules" />
+  <EncryptGate gateId="schedules">
   <div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32">
     <div class="card-base z-10 px-4 py-6 md:px-9 relative w-full">
       <SchedulesView
@@ -64,6 +71,7 @@ const selected =
       />
     </div>
   </div>
+  </EncryptGate>
 </MainGridLayout>
 <style>
 /* 保留原有容器样式以兼容 Svelte 内部 :global 选择器 */

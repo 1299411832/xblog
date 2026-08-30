@@ -1,38 +1,38 @@
+import { unified } from "@astrojs/markdown-remark";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
-import tailwindcss from "@tailwindcss/vite";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import swup from "@swup/astro";
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
-import { unified } from "@astrojs/markdown-remark";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
+import katex from "katex";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeComponents from "rehype-components"; /* Render the custom directive content */
 import rehypeKatex from "rehype-katex";
-import katex from "katex";
 import "katex/dist/contrib/mhchem.mjs"; // 加载 mhchem 扩展
+import mdx from "@astrojs/mdx";
+import { pluginCollapsible } from "expressive-code-collapsible"; /* Collapsible */
+import { pluginLanguageBadge } from "expressive-code-language-badge"; /* Language Badge */
+import rehypeCallouts from "rehype-callouts";
 import rehypeSlug from "rehype-slug";
 import remarkDirective from "remark-directive"; /* Handle directives */
 import remarkMath from "remark-math";
-import rehypeCallouts from "rehype-callouts";
 import remarkSectionize from "remark-sectionize";
-import { expressiveCodeConfig, siteConfig } from "./src/config";
-import { i18n } from "./src/i18n/translation";
+import { expressiveCodeConfig, securityConfig, siteConfig } from "./src/config";
 import I18nKey from "./src/i18n/i18nKey";
-import { pluginLanguageBadge } from "expressive-code-language-badge"; /* Language Badge */
-import { pluginCollapsible } from "expressive-code-collapsible"; /* Collapsible */
+import { i18n } from "./src/i18n/translation";
 import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
+import rehypeEmailProtection from "./src/plugins/rehype-email-protection.mjs";
+import rehypeExternalLinks from "./src/plugins/rehype-external-links.mjs";
+import rehypeFigure from "./src/plugins/rehype-figure.mjs";
 import { rehypeMermaid } from "./src/plugins/rehype-mermaid.mjs";
 import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
-import mdx from "@astrojs/mdx";
-import rehypeEmailProtection from "./src/plugins/rehype-email-protection.mjs";
-import rehypeExternalLinks from "./src/plugins/rehype-external-links.mjs";
-import rehypeFigure from "./src/plugins/rehype-figure.mjs";
 
 // https://astro.build/config
 export default defineConfig({
@@ -102,9 +102,13 @@ export default defineConfig({
 				...(expressiveCodeConfig.pluginCollapsible?.enable === true
 					? [
 							pluginCollapsible({
-								lineThreshold: expressiveCodeConfig.pluginCollapsible.lineThreshold || 15,
-								previewLines: expressiveCodeConfig.pluginCollapsible.previewLines || 8,
-								defaultCollapsed: expressiveCodeConfig.pluginCollapsible.defaultCollapsed ?? true,
+								lineThreshold:
+									expressiveCodeConfig.pluginCollapsible.lineThreshold || 15,
+								previewLines:
+									expressiveCodeConfig.pluginCollapsible.previewLines || 8,
+								defaultCollapsed:
+									expressiveCodeConfig.pluginCollapsible.defaultCollapsed ??
+									true,
 								expandButtonText: i18n(I18nKey.codeCollapsibleShowMore),
 								collapseButtonText: i18n(I18nKey.codeCollapsibleShowLess),
 								expandedAnnouncement: i18n(I18nKey.codeCollapsibleExpanded),
@@ -161,6 +165,13 @@ export default defineConfig({
 				}
 				if (pathname === "/bangumi/" && !siteConfig.pages.bangumi) {
 					return false;
+				}
+
+				// 页面加密启用时不收录加密页面（资金/账单、笔记本、日程）
+				if (securityConfig.enabled) {
+					if (pathname.startsWith("/bills")) return false;
+					if (pathname.startsWith("/life/notebooks")) return false;
+					if (pathname.startsWith("/schedules")) return false;
 				}
 
 				return true;
@@ -278,9 +289,7 @@ export default defineConfig({
 		}),
 	},
 	vite: {
-		plugins: [
-			tailwindcss(),
-		],
+		plugins: [tailwindcss()],
 		define: {},
 		// 预构建依赖，避免动态导入时出现 504 (Outdated Optimize Dep)
 		optimizeDeps: {

@@ -12,7 +12,7 @@
 - 部署 EdgeOne Pages（push main 自动构建）；后台 PagesCMS 自托管（cms.tsh520.cn，配置在根目录 `.pages.yml`，字段必须与 `src/content.config.ts` 的 zod 对齐，未声明字段保存时被丢弃）
 - 15 个 Astro Content Collections（`src/content.config.ts` + `src/content/`：posts/spec/moments/bangumi/life/notebooks/album/daohang/ziyuan/friends/tombstones/apps/changelog/bills/schedules）
 - **本地 Obsidian 插件**（`plug-in/Obsidian/obsidian-category-autofill/`，独立 git 仓库，已 gitignore）：自动维护文章的 category 与新建文章属性。**改它的规范见该目录的 AGENTS.md**——完成改动后必须 `pnpm build`（自动拷贝进 `src` 库）+ `pnpm test` + commit & push GitHub + 提醒用户 reload Obsidian
-- 主要目录：`src/components/`（按功能域 12 子目录：analytics/bills/comment/common/controls/features/layout/misc/moments/pages/schedules/widget，禁止根目录平铺） / `src/pages/`（39 路由，admin 已删） / `src/styles/main.css`（唯一入口） / `src/config/`（26 配置 + index.ts barrel） / `src/utils/`（35 个工具与控制器，含 category-tree.ts） / `scripts/`（10 个中文命名脚本目录 + cli.js 与 5 个英文 .mjs 脚本）
+- 主要目录：`src/components/`（按功能域 13 子目录：analytics/bills/comment/common/controls/features/layout/misc/moments/pages/schedules/security/widget，禁止根目录平铺） / `src/pages/`（39 路由，admin 已删） / `src/styles/main.css`（唯一入口） / `src/config/`（27 配置 + index.ts barrel） / `src/utils/`（36 个工具与控制器，含 category-tree.ts、encrypt-gate.ts） / `scripts/`（10 个中文命名脚本目录 + cli.js 与 5 个英文 .mjs 脚本）
 
 ## 快速上手
 

@@ -984,3 +984,33 @@ export type GuestbookConfig = {
 	announcements: GuestbookAnnouncementItem[];
 	adminNicknames?: string[];
 };
+
+// 页面加密（EncryptGate）配置
+export type SecurityConfig = {
+	/** 页面加密总开关 */
+	enabled: boolean;
+	/** PBKDF2 迭代次数（拉高离线爆破成本） */
+	pbkdf2Iterations: number;
+	/** 解锁记忆天数：0 = 每次访问都要输密码；>0 = 记忆 N 天（localStorage 存派生密钥） */
+	rememberDays: number;
+	/** 连续输错 maxAttempts 次后进入冷却 */
+	maxAttempts: number;
+	/** 冷却秒数 */
+	cooldownSeconds: number;
+	/** 锁卡片标题 */
+	title: string;
+	/** 锁卡片副标题 */
+	hint: string;
+	/** 密码为空提示 */
+	emptyError: string;
+	/** 密码错误提示 */
+	wrongError: string;
+	/** 冷却中提示 */
+	cooldownError: string;
+	/** 解锁按钮文案 */
+	unlockText: string;
+	/** 解锁中文案 */
+	unlockingText: string;
+	/** 免输入记忆文案模板（{days} 为天数） */
+	rememberText: string;
+};

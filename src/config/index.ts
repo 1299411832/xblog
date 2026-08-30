@@ -53,6 +53,7 @@ export { live2dModelConfig, spineModelConfig } from "./pioConfig"; // 看板娘�
 export { profileConfig } from "./profileConfig"; // 用户资料配置
 export { relationshipConfig } from "./relationshipConfig"; // 恋爱计时配置
 export { sakuraConfig } from "./sakuraConfig"; // 樱花特效配置
+export { securityConfig } from "./securityConfig"; // 页面加密配置
 // 布局配置
 export { sidebarLayoutConfig } from "./sidebarConfig"; // 侧边栏布局配置
 // 核心配置

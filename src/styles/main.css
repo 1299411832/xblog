@@ -73,6 +73,7 @@
 @import './pages/friends.css';
 @import './pages/apps.css';
 @import './pages/notebooks.css';
+@import './pages/encrypt-gate.css';
 @import './pages/categories.css';
 @import './components/about-profile-card.css';
 @import './components/about-chat-bubble.css';

@@ -4,3 +4,9 @@ exclude_selectors:
   - "[data-pagefind-ignore]"
   - ".search-panel"
   - "#search-panel"
+# 加密页面双保险：内容在构建时已加密（DOM 无明文），此处再按路径排除，
+# 防止页面标题/骨架等残片进入搜索索引（资金/账单页、笔记本页、日程页）
+exclude_globs:
+  - "**/bills/**"
+  - "**/life/notebooks/**"
+  - "**/schedules/**"
