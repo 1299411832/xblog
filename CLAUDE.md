@@ -648,6 +648,7 @@ return controller;
 | 修改博客各功能 frontmatter 字段（`src/content.config.ts` 的 zod schema / `.pages.yml` / 页面 `normalizeImages`/`getGridCols` 等展示逻辑）未同步 AstrBot 插件 `plug-in/AstrBot/AstrBot BlogWriter` 的 `build_*_md` 生成逻辑 | 插件写入的旧格式导致页面 `images` 为空、归档卡片/灯箱不显示或 zod 校验失败（如 2026-09-27 笔记从正文 `![](url)` 改为 `images` 数组，前端已用 `images` 宫格展示） | 凡改动 moments/bangumi/life/notebooks/album/daohang/bills/schedules 等集合的字段名、类型或渲染约定，必须立即检查并同步更新插件的 `blog_writer_core.py:build_*_md` 与 `tests/test_core.py`，并提醒站长同步发布插件新版本 |
 | 把敏感内容/交互组件移出 `EncryptGate` 加密区，或把 `PasswordGate` 放到 `MainGridLayout` 外 | 内容明文出现在 HTML（加密失效）；PasswordGate 在 Swup 容器外时 SPA 导航进入加密页不重新挂载，门与解密注入全失效（2026-08-30 实测教训） | 加密页敏感内容必须包在 `<EncryptGate gateId>` 内且不含 client:Svelte 组件（is:inline 脚本放加密区外靠事件委托）；PasswordGate 必须放 `</MainGridLayout>` 之前（Swup 容器内） | 见 §3.4 |
 | 解密注入后未派发 `swup:content:replaced` | 加密区内的账单翻页、笔记本展开收起、评论按钮等依赖该事件重扫的内联脚本全部失灵 | `PasswordGate.svelte` 的 `finishUnlock()` 已同步派发，勿删 | 见 §3.4 |
+| 把 API Key / Token / 密码硬编码进任何被 git 跟踪的文件（scripts/、注释、markdown 都算），或轻信注释里"会被 .gitignore 保护"的声明而不实测 | 公开仓库全历史可读，GitGuardian 告警、密钥被扫描器批量收割滥用（2026-08-30 GitGuardian 事故：DashScope Key 硬编码在 `scripts/生成摘要/index.ts` 长期公开，声明受 .gitignore 保护但实际从未生效） | 密钥一律放 `.env`（已 gitignore）+ `process.env.XXX` 读取，脚本调用带 `--env-file=.env`，`.env.example` 只留空模板；新增任何疑似含密钥的文件，提交前必须实测 `git check-ignore <path>` 与 `git ls-files <path>` 确认未被跟踪；一旦泄露：**先去对应控制台吊销重发（唯一根治）**，再从代码清除，git 历史清理通常不必要且代价大 |
 
 ---
 
@@ -778,7 +779,7 @@ description: 一句话概括（显示在列表页）
 模块/功能完成后，必须做收尾，**不确定就问**（问站长“怎么做”）。
 
 **必做清单**：
-1. **该清的清理**：删一次性脚本/临时文件（如 `scripts/migrate/*.mjs`、`write_places.cjs` 残留）、`node_modules/.vite` 缓存验证、未用到的 `*.test.mjs`、废弃的 `category` frontmatter 残留 `grep -rn "category:" src/content/posts` 验证 0 命中；新增的本地目录（`.superpowers/` 等）不在 `src` 则应进 `.gitignore`（2026-02 bills/schedules 教训）
+1. **该清的清理**：删一次性脚本/临时文件（如 `scripts/migrate/*.mjs`、`write_places.cjs` 残留）、`node_modules/.vite` 缓存验证、未用到的 `*.test.mjs`、废弃的 `category` frontmatter 残留 `grep -rn "category:" src/content/posts` 验证 0 命中；新增的本地目录（`.superpowers/` 等）不在 `src` 则应进 `.gitignore`（2026-02 bills/schedules 教训）；**涉密检查**：新增/改动的密钥、Token、密码一律放 `.env`（已 gitignore），提交前用 `grep -rnE "sk-[a-zA-Z0-9]{20,}|AKID[a-zA-Z0-9]+" <改动文件>` 与 `git ls-files` 复核零硬编码、零误跟踪（2026-08-30 GitGuardian 密钥泄露教训，见 §15 反模式清单）
 2. **该保留的保留**：保留可复用工具（如 `src/utils/category-tree.ts`）、保留 `docs/superpowers/plans/*.md` 计划文档、保留 `plug-in/` 插件的独立 git 历史
 3. **该问的就问**：删/留边界模糊时（如 `plug-in/Obsidian` 是否彻底废弃还是保留 no-op）、是否需要数据迁移二次校验、是否需要提醒用户 `Obsidian Ctrl+P 重载` / `FlClash 代理` 等，**不知道就问，不要猜**
 4. **文档同步**：同步 `CLAUDE.md` 第 2/16/18/21 节、`.pages.yml` 与 `src/content.config.ts` 对齐校验、`README` 涉及变动的
