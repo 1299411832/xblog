@@ -52,6 +52,9 @@ src/临时收集
 src/.claudian
 src/.trash
 src/notes
+src/.copilot
+src/.opencode
+src/copilot
 
 .env*
 
