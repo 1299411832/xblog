@@ -4,6 +4,7 @@ published: 2026-09-01
 updated: 2026-09-02
 draft: false
 description: 今日份运气直接拉满✨
+image: /assets/IMG20260713192029.jpg
 tags:
   - 日常
   - 音乐
