@@ -16,14 +16,14 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 
 		// 网站导航
 		{
-			name: "网站导航",
+			name: "星际航站",
 			url: "/projects/",
 			icon: "material-symbols:public",
 		},
 
 		// 文章（带下拉子菜单）
 		{
-			name: "文章",
+			name: "星文",
 			url: "/posts/",
 			icon: "material-symbols:article",
 			children: [
@@ -45,27 +45,27 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 
 	// 动态（带下拉子菜单）
 	links.push({
-		name: "动态",
+		name: "衍态",
 		url: "/moments/",
 		icon: "material-symbols:local-cafe",
 		children: [
 			{
-				name: "说说",
+				name: "衍说",
 				url: "/moments/",
 				icon: "material-symbols:chat-bubble-outline",
 			},
 			{
-				name: "相册",
+				name: "缝隙",
 				url: "/album/",
 				icon: "material-symbols:photo-album-outline",
 			},
 			{
-				name: "留言板",
+				name: "树洞星球",
 				url: "/guestbook/",
 				icon: "material-symbols:edit-outline",
 			},
 			{
-				name: "笔记本",
+				name: "迷·纪元",
 				url: "/life/notebooks/",
 				icon: "material-symbols:menu-book-outline",
 			},
@@ -88,7 +88,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 	}
 	// 足迹
 	recordChildren.push({
-		name: "足迹",
+		name: "星迹",
 		url: "/life/places/",
 		icon: "material-symbols:location-on",
 	});
@@ -100,7 +100,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 				: "/music/";
 
 		links.push({
-			name: "记录",
+			name: "智录",
 			url: defaultUrl,
 			icon: "material-symbols:camera-outdoor",
 			children: recordChildren,
@@ -109,7 +109,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 
 	// 我的 - 日历、账单、应用展示、音乐
 	links.push({
-		name: "我的",
+		name: "星目",
 		url: "/schedules/",
 		icon: "material-symbols:person",
 		children: [
@@ -124,14 +124,14 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 				icon: "material-symbols:account-balance-wallet-outline",
 			},
 			{
-				name: "应用展示",
+				name: "生态模拟",
 				url: "/apps/",
 				icon: "material-symbols:apps",
 			},
 			...(siteConfig.pages.musicPage
 				? [
 						{
-							name: "音乐",
+							name: "迷·PLAYER音乐",
 							url: "/music/",
 							icon: "material-symbols:music-note",
 							external: true,
@@ -148,18 +148,31 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		icon: "material-symbols:info",
 		children: [
 			// 关于页面
-			LinkPreset.About,
-
-			// 友链
-			LinkPreset.Friends,
-
-			// QQ群
+			// LinkPreset.About,
 			{
-				name: "QQ群",
-				url: "https://qm.qq.com/q/FjkXxV9Hmo",
+				name: "折扣星球",
+				url: "https://ficp.fun/s/iZJdfm/?cid=P8GqhZF#/",
 				icon: "material-symbols:group",
 				external: true,
 			},
+						
+			// QQ群
+
+			{
+				name: "微店",
+				url: "https://k.youshop10.com/rYmlXkLT",
+				icon: "material-symbols:group",
+				external: true,
+			},
+			{
+				name: "淘宝店",
+				url: "https://shop.m.taobao.com/shop/shop_index.htm?shop_id=112853800",
+				icon: "material-symbols:group",
+				external: true,
+			},
+
+			// 友链
+			LinkPreset.Friends,
 
 			// 赞助
 			...(siteConfig.pages.sponsor ? [LinkPreset.Sponsor] : []),
