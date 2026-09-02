@@ -48,11 +48,11 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		desktop:
 			desktopImages.length > 0
 				? desktopImages
-				: ["/assets/images/home/main/home.webp"],
+				: ["/assets/images/home/main/083205Yfgeq.jpg"],
 		mobile:
 			mobileImages.length > 0
 				? mobileImages
-				: ["/assets/images/home/main/home-mobile.webp"],
+				: ["/assets/images/home/main/6.jpg"],
 	},
 	// Banner模式特有配置
 	banner: {
@@ -73,9 +73,9 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			titleSize: "3.8rem",
 			// 主页横幅副标题
 			subtitle: [
-				"请耐心做好目前的事吧，上岸是迟早的，潮水退去以后一定会收获到贝壳。",
-				"不要怕，无论什么困难的事，只要硬着头皮去做，就闯过去了。",
-				"你可以不优秀，但不能不努力。",
+				"我点燃了火，却控制不了它。",
+				"对于我们的幸福来说，别人的看法在本质上来讲并不十分重要。",
+				"谨口慎言方可保命。",
 			],
 			// 主页横幅副标题字体大小
 			subtitleSize: "1.5rem",
@@ -102,7 +102,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			},
 			text: {
 				// 桌面端要显示的来源文本
-				desktop: "网站浏览量",
+				desktop: "星球浏览量",
 				// 移动端要显示的来源文本
 				mobile: "Pixiv - KiraraShss",
 			},
