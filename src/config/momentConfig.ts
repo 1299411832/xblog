@@ -1,13 +1,13 @@
 import type { GuestbookConfig } from "../types/config";
 
 export const momentConfig: GuestbookConfig = {
-	adminNicknames: ["团子和蛋糕"],
+	adminNicknames: ["迷体星球"],
 	announcements: [
 		{
 			id: "moments-rules",
-			title: "动态评论规范",
+			title: "星球·衍态·规范",
 			summary: "发布前请先阅读，违规内容将被处理。",
-			lead: "在动态下评论时，请遵守以下规范：",
+			lead: "在星球·衍态评论时，请遵守以下规范：",
 			rules: [
 				"遵守中华人民共和国法律法规及网信、文化、出版等相关管理规定；不得发布危害国家安全、泄露国家秘密、煽动分裂、宣扬恐怖极端、民族仇恨与歧视、暴力色情、赌博、制售违禁品等违法违规信息。",
 				"尊重他人合法权益：不得公布他人隐私信息、肖像、住址、联系方式等；不得侵害他人名誉权、著作权、商标权及其他知识产权。",
