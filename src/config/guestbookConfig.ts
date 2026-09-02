@@ -3,11 +3,11 @@ import type { GuestbookConfig } from "../types/config";
 export const guestbookConfig: GuestbookConfig = {
 	// 站长昵称列表：匹配的消息自动显示为站长（右侧），不需要登录
 	// 请填入你在 Waline 中使用的昵称，区分大小写
-	adminNicknames: ["团子和蛋糕"],
+	adminNicknames: ["迷体星球"],
 	announcements: [
 		{
 			id: "comment-and-message-rules",
-			title: "评论及留言规则",
+			title: "树洞星球·规则",
 			summary: "请在交流中保持友善、理性和尊重。",
 			lead: "你不得利用本站发布、传播或实施以下行为：",
 			rules: [
