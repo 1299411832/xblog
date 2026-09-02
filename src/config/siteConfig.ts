@@ -7,26 +7,26 @@ const SITE_LANG = "zh_CN";
 
 export const siteConfig: SiteConfig = {
 	// 站点标题
-	title: "团子和蛋糕的博客",
+	title: "迷体星球",
 
 	// 站点副标题
-	subtitle: "",
+	subtitle: "叹镜世界",
 
 	// 站点 URL
-	site_url: "https://blog.tsh520.cn",
+	site_url: "https://miti.cc.cd",
 
 	// 站点描述
 	description:
-		"团子和蛋糕的博客，一个分享技术见解与生活感悟的个人空间。涵盖编程开发、实用工具推荐、ACG文化与日常生活的随想，记录成长的每一步。",
+		"手工造物、元宇宙、人工智能、社交、旅行和虚拟现实，歌手、策划、乐手集一身的探索星球",
 
 	// 站点关键词
 	keywords: [
-		"团子",
-		"团子和蛋糕",
-		"蛋糕",
-		"团子和蛋糕的博客",
-		"团子的博客",
-		"蛋糕的博客",
+		"迷体",
+		"迷体星球",
+		"星球",
+		"迷体星球的骇客空间",
+		"迷体的博客",
+		"迷体星球的博客",
 	],
 
 	// 主题色
@@ -76,7 +76,7 @@ export const siteConfig: SiteConfig = {
 			alt: "🍀",
 		},
 		// 导航栏标题
-		title: "团子和蛋糕",
+		title: "迷体·叹镜世界",
 		// 悬停时显示的互动颜文字
 		hoverTitle: "w(ﾟДﾟ)w 不要走！再看看嘛！",
 		// 全宽导航栏，导航栏是否占满屏幕宽度，true：占满，false：不占满
@@ -92,7 +92,7 @@ export const siteConfig: SiteConfig = {
 	portal: {
 		announcement: {
 			enable: true,
-			text: "欢迎来到团子和蛋糕的博客！这里有技术分享、生活记录和更多有趣内容。",
+			text: "欢迎骇入迷体星球！这里是手工造物、元宇宙、人工智能、社交、旅行和虚拟现实，歌手、策划、乐手集一身的探索星球。",
 		},
 		dailyQuote: {
 			enable: true,
@@ -178,7 +178,7 @@ export const siteConfig: SiteConfig = {
 	// 说说页面封面配置（微信朋友圈风格）
 	momentsCover: {
 		enable: true,
-		image: "/assets/images/moments-cover.jpg",
+		image: "/assets/images/3.jpg",
 	},
 
 	// 分类导航栏开关，在首页和归档页顶部显示分类快捷导航
