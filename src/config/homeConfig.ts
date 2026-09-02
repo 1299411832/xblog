@@ -36,37 +36,37 @@ export const homeConfig = {
 
 	hero: {
 		backgroundImage:
-			_deskImgs.length > 0 ? _deskImgs[0] : `${replicaRoot}/main/home.webp`,
+			_deskImgs.length > 0 ? _deskImgs[0] : `${replicaRoot}/main/083205Yfgeq.jpg`,
 		backgroundImageMobile:
 			_mobImgs.length > 0
 				? _mobImgs[0]
-				: `${replicaRoot}/main/home-mobile.webp`,
+				: `${replicaRoot}/main/6.jpg`,
 		backgroundImagePool: _deskImgs.length > 0 ? _deskImgs : [],
 		backgroundImageMobilePool: _mobImgs.length > 0 ? _mobImgs : [],
 		speechAccentImage: `${replicaRoot}/main/home2-1.webp`,
 		dialogue: {
 			enabled: true,
 			speakers: {
-				host: "团子",
+				host: "迷体星球",
 				visitor: "访客",
 			},
-			menuTitle: "想聊点什么？",
+			menuTitle: "探索点什么？",
 			typingSpeed: 45,
 			autoDelay: 1600,
 			intro: [
-				{ speaker: "host", text: "欸，来客人啦。欢迎来到团子和蛋糕的博客。" },
+				{ speaker: "host", text: "欸，是骇入的天外来客。欢迎来到【迷体星球】。" },
 				{
 					speaker: "host",
-					text: `这里是 ${profileConfig.name} 的个人空间，技术、生活和喜欢的东西都会慢慢收进来。`,
+					text: `这里是 ${profileConfig.name} 的航站空间，音乐、生活和喜欢的东西都会慢慢收进来。`,
 				},
 				{ speaker: "host", text: primaryBio },
-				{ speaker: "host", text: "想先了解哪一块？点下面的话题，我们慢慢逛。" },
+				{ speaker: "host", text: "骇入其他节点？点下面的话题，我们慢慢叹镜。" },
 			],
 			topics: [
 				{
-					title: "关于我",
+					title: "关于迷体",
 					lines: [
-						{ speaker: "visitor", text: "这里的站长是谁呀？" },
+						{ speaker: "visitor", text: "这是哪里呀？" },
 						{
 							speaker: "host",
 							text: `${profileConfig.name}，也可以叫 ${displayName}。`,
@@ -74,25 +74,25 @@ export const homeConfig = {
 						{
 							speaker: "host",
 							text:
-								profileConfig.occupation || "喜欢折腾技术，也认真记录生活。",
+								profileConfig.occupation || "音乐、工具、导航星球的中转站，也认真记录地球online生活。",
 						},
 						{
 							speaker: "host",
-							text: bioLines[1] || "如果你喜欢，那么欢迎来到我的世界。",
+							text: bioLines[1] || "总之，欢迎来到迷体世界。",
 						},
 					],
 				},
 				{
-					title: "博客特色",
+					title: "星球特色",
 					lines: [
-						{ speaker: "visitor", text: "这个博客主要写什么？" },
+						{ speaker: "visitor", text: "这个星球主要干什么？" },
 						{
 							speaker: "host",
-							text: "这里会分享技术见解、实用工具、ACG 相关内容，也会留下日常生活的碎片。",
+							text: "这里会分享音乐、实用工具、手工造物相关内容，也会留下日常生活的碎片。",
 						},
 						{
 							speaker: "host",
-							text: "首页也放了站点数据、文章导航和作品展示，慢慢滚动会有完整的视觉演出。",
+							text: "迷体星球首页也放了站点数据、文章导航和作品展示，慢慢滚动会有完整的视觉演出。",
 						},
 						{
 							speaker: "host",
@@ -104,7 +104,7 @@ export const homeConfig = {
 		},
 		rightPanel: {
 			pill: "BLOG",
-			title: "博客",
+			title: "星球骇客",
 			diamond: "✦",
 			microText: "システム起動完了",
 		},
@@ -124,8 +124,8 @@ export const homeConfig = {
 
 	displayLayer: {
 		enabled: true,
-		kicker: "作品展示",
-		title: "CRYSTALLIZE GALLERY",
+		kicker: "虫洞穿梭",
+		title: "TRAVEL THROUGH TIME",
 		description:
 			"Where fleeting visions crystallize into permanence — each frame a frozen breath of time, each work a memory hardened into light.",
 		scrollDistance: 4000,
@@ -136,57 +136,57 @@ export const homeConfig = {
 	portfolioShutter: {
 		enabled: true,
 		kicker: "The End",
-		title: "愿你每一天 都闪闪发光",
-		description: "岁岁常欢愉，万事皆胜意",
+		title: "迷体 · 叹镜世界",
+		description: "如果你能在浪费时间中获得乐趣，就不算浪费时间。",
 		scrollDistance: 3000,
 		finalImage: {
 			midgroundImage: `${replicaRoot}/portrait/utl-back1.webp`,
 			backgroundVideo: `${replicaRoot}/portrait/utl-back2.webm`,
 			foregroundImage: `${replicaRoot}/portrait/utl-1.webp`,
-			alt: "愿你每一天都闪闪发光",
+			alt: "因为不可能，所以才值得相信。",
 		},
 		interlude: {
 			foreground: `${replicaRoot}/portrait/b-1.webp`,
 			stripLeft: `${replicaRoot}/portrait/b-2.webp`,
 			stripRight: `${replicaRoot}/portrait/b-3.webp`,
-			copyLeft: "团子",
-			copyRight: "蛋糕",
+			copyLeft: "迷体",
+			copyRight: "星球",
 		},
 		panels: [
 			{
-				title: "项目实践",
+				title: "星球纪元",
 				english: "PROJECTS",
 				description: "博客 · 工具 · 创意实验",
 				image: `${replicaRoot}/portrait/1.webp`,
-				alt: "项目实践",
+				alt: "星球纪元",
 			},
 			{
-				title: "技术学习",
+				title: "手工造物",
 				english: "LEARNING",
-				description: "编程开发 · 技术随笔 · 踩坑记录",
+				description: "手工万物 · 品牌随笔 · 策划记录",
 				image: `${replicaRoot}/portrait/2.webp`,
-				alt: "技术学习",
+				alt: "手工造物",
 			},
 			{
-				title: "博客特色",
+				title: "音乐星球",
 				english: "BLOG FEATURES",
-				description: "文章索引 · 归档统计 · 生活记录",
+				description: "音乐索引 · 学琴记录 · 音乐衍生",
 				image: `${replicaRoot}/portrait/3.webp`,
-				alt: "博客特色",
+				alt: "音乐星球",
 			},
 			{
-				title: "站点技术",
+				title: "品牌策划",
 				english: "STACK",
-				description: "Astro · Svelte · Tailwind CSS",
+				description: "爱 · 支柱 · 创意协作",
 				image: `${replicaRoot}/portrait/4.webp`,
-				alt: "站点技术",
+				alt: "品牌策划",
 			},
 			{
-				title: "相册收录",
+				title: "星球缝隙",
 				english: "PHOTO ALBUM",
-				description: "日常照片 · 视觉收藏 · 灵感片段",
+				description: "日常照片 · 旅游定制 · 灵感片段",
 				image: `${replicaRoot}/portrait/5.webp`,
-				alt: "相册收录",
+				alt: "星球缝隙",
 			},
 		],
 	},
