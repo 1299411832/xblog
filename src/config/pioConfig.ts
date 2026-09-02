@@ -3,7 +3,7 @@ import type { Live2DModelConfig, SpineModelConfig } from "../types/config";
 // Spine 看板娘配置
 export const spineModelConfig: SpineModelConfig = {
 	// Spine 看板娘开关
-	enable: false,
+	enable: true,
 
 	// Spine模型配置
 	model: {
@@ -51,14 +51,14 @@ export const spineModelConfig: SpineModelConfig = {
 		],
 		// 点击时随机显示的文字消息
 		clickMessages: [
-			"你好呀！我是团子！~",
-			"今天也要加油哦！✨",
+			"穿越者！这里是迷体星球！听得到吗~",
+			"今天也要好好探索！✨",
 			"想要一起去看星空吗？🌟",
 			"记得要好好休息呢~",
-			"有什么想对我说的吗？💫",
-			"让我们一起探索未知的世界吧！🚀",
+			"我们现在在什么航线？💫",
+			"让我们一起叹镜世界吧！🚀",
 			"每一颗星星都有自己的故事~⭐",
-			"希望能带给你温暖和快乐！💖",
+			"希望迷体星球能带给你温暖和快乐！💖",
 		],
 		// 文字显示时间（毫秒）
 		messageDisplayTime: 3000,
