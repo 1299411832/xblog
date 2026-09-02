@@ -5,7 +5,7 @@ export const announcementConfig: AnnouncementConfig = {
 	title: "公告",
 
 	// 公告内容
-	content: "如果你喜欢，那么欢迎来到我的世界！",
+	content: "缘分让我们相遇，那么开始探测迷体世界吧！",
 
 	// 是否允许用户关闭公告
 	closable: true,
@@ -15,7 +15,7 @@ export const announcementConfig: AnnouncementConfig = {
 
 		enable: true,
 		// 链接文本
-		text: "了解更多",
+		text: "骇入星球",
 		// 链接 URL
 		url: "/about/",
 		// 内部链接
