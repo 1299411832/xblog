@@ -21,7 +21,7 @@ export const circleConfig: CircleConfig = {
 	dataUrl: "https://cir.tsh520.cn/data.json",
 
 	// 每页显示 20 篇文章
-	pageSize: 20,
+	pageSize: 10,
 
 	// 显示统计卡片（友链总数、活跃数、文章数等）
 	showStats: true,
