@@ -15,6 +15,8 @@ comment: true
 
 今日份运气直接拉满✨
 
+![3.jpg](/assets/3.jpg)
+
 守着[汗颜R]小摊发呆的时候
 
 抬头撞见双层彩虹横跨苍山[哇R][哇R]
@@ -46,3 +48,6 @@ comment: true
 日子平平淡淡[大笑R][大笑R]
 
 但总会有意想不到的美好如约而至～[买爆R][买爆R]
+
+![23.gif](blob:https:/app.pagescms.org/360c6d55-9eca-4ee3-b278-5a3b526b66c8)
+
