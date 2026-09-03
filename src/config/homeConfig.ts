@@ -25,9 +25,9 @@ const primaryBio = bioLines[0] || siteConfig.description || "";
 const displayName = profileConfig.displayName || profileConfig.name;
 
 export const homeConfig = {
-	avatar: "assets/images/x.gif",
-	avatarOnWork: "assets/images/x.gif",
-	avatarOffWork: "assets/images/23.gif",
+	avatar: "assets/images/2.png",
+	avatarOnWork: "assets/images/2.png",
+	avatarOffWork: "assets/images/2.png",
 	name: profileConfig.name,
 	displayName,
 	nameBadge: siteConfig.title,
